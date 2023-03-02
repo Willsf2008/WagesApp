@@ -8,11 +8,13 @@ namespace WagesApp
     {
 
         //global variables
+        static string topEarner = "";
+        static int topEarnerHours = 0;
 
 
         //methods and/or functions
 
-        static void CalculateWages(int totalHoursWorked)
+        static void CalculateWages(int totalHoursWorked, string employeeName)
         {
             //Display the total weekly hours stored
             Console.WriteLine($"Total hours worked : {totalHoursWorked}hrs");
@@ -26,6 +28,12 @@ namespace WagesApp
                 //If bonus hours have been given display correct amount
                 Console.WriteLine($"5 bonus hours added: {totalHoursWorked}hrs");
             }
+            if (totalHoursWorked > topEarnerHours)
+            {
+                topEarnerHours = totalHoursWorked;
+                topEarner = employeeName;
+
+            }
 
 
 
@@ -33,11 +41,23 @@ namespace WagesApp
 
             int wages = totalHoursWorked * 22;
 
+            float tax = 0.07f;
+
             //Calculate tax
+            if (wages > 450)
+            {
+               tax = 0.08f;
+            }
 
             //Calculate final pay
 
+            float finalPay = wages - (float)Math.Round(wages * tax,2);
+
             //Display the results of the calculations followed by two blank lines
+            Console.WriteLine($"Weekly Pay: {wages}\n" +
+                $"Tax Rate: {tax}\n" +
+                $"Tax: {Math.Round(wages * tax, 2)}\n" +
+                $"Final Pay: {finalPay}\n\n\n");
         }
 
         static void OneEmployee()
@@ -83,7 +103,7 @@ namespace WagesApp
 
 
             //Call the CalculateWages()
-            CalculateWages(sumHoursWorked);
+            CalculateWages(sumHoursWorked, employeeName);
 
         }
 
@@ -92,7 +112,19 @@ namespace WagesApp
         //when run or main process
         static void Main(string[] args)
         {
-            OneEmployee();
+            string flagMain = "";
+            while (!flagMain.Equals("XXX") )
+            {
+                OneEmployee();
+
+                Console.WriteLine("Press <Enter> to add another employee or type 'XXX' to quit");
+                flagMain = Console.ReadLine();
+
+
+
+            }
+            Console.WriteLine($"Top Earner: {topEarner} working {topEarnerHours} hours");
+            
         }
     }
 }
