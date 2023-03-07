@@ -154,6 +154,7 @@ namespace WagesApp
             }
             Console.WriteLine($"Top Earner: {topEarner} working {topEarnerHours} hours");
 
+    
         }
     }
 }
